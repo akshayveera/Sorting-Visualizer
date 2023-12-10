@@ -1,0 +1,43 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorting Visualiser</title>
+    <link rel="stylesheet" href="./index.css">
+</head>
+<body>
+    <h1 class="title">Sorting Visualiser</h1>
+    <header class="header">
+        <button class="btn-main" id="new-array">New Array</button>
+        <div class="sizeSpeed">
+            <div>
+                <label for="sizeSlider">Size</label>
+                <input type="range" value="30" name="sizeOfArray" id="sizeSlider">
+            </div>
+            <div>
+                <label for="speedSlider">Speed</label>
+                <input type="range" min="50" max="400" value="200" name="speedOfSorting" id="speedSlider">
+            </div>
+        </div>
+        <div class="sortBtns">
+            <button class="btn" class="bubblebtn" id="bubble">Bubble Sort</button>
+            <button class="btn" id="selection">Selection Sort</button>
+            <button class="btn" id="insertion">Insertion Sort</button>
+            <!-- <button class="btn" id="quick">Quick Sort</button> -->
+        </div>
+    </header>
+    <section>
+        <ul class="container" id="bars">
+        </ul>
+    </section>
+
+    <!-- <script src="./App.js"></script> -->
+    <script src="./index.js"></script>
+    <script src="./bubble.js"></script>
+    <script src="./selection.js"></script>
+    <script src="./insertion.js"></script>
+    <!-- <script src="./quick.js"></script> -->
+</body>
+</html>
