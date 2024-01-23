@@ -1,83 +1,82 @@
 
-let counter = 0;
 
-async function quickSort(allBars, lo, hi)
-{
-    if(lo<hi)
-    {
-        // console.log("quick sort")
-        console.log("counter : " + counter++);
-      const mid = partition(allBars, lo, hi);
-      
-      quickSort(allBars, lo, mid-1);
-      quickSort(allBars, mid+1, hi);
-    }
+async function partitionLomuto(ele, l, r){
+  console.log('In partitionLomuto()');
+  let i = l - 1;
+  // color pivot element
+  ele[r].style.background = 'red';
+  for(let j = l; j <= r - 1; j++){
+      console.log('In partitionLomuto for j');
+      // color current element
+      ele[j].style.background = 'yellow';
+      // pauseChamp
+      await waitforMe(delay);
+
+      if(parseInt(ele[j].style.height) < parseInt(ele[r].style.height)){
+          console.log('In partitionLomuto for j if');
+          i++;
+          swap(ele[i], ele[j]);
+          // color 
+          ele[i].style.background = 'orange';
+          if(i != j) ele[j].style.background = 'orange';
+          // pauseChamp
+          await waitforMe(delay);
+      }
+      else{
+          // color if not less than pivot
+          ele[j].style.background = 'pink';
+      }
+  }
+  i++; 
+  // pauseChamp
+  await waitforMe(delay);
+  swap(ele[i], ele[r]); // pivot height one
+  console.log(`i = ${i}`, typeof(i));
+  // color
+  ele[r].style.background = 'pink';
+  ele[i].style.background = 'green';
+
+  // pauseChamp
+  await waitforMe(delay);
+  
+  // color
+  for(let k = 0; k < ele.length; k++){
+      if(ele[k].style.background != 'green')
+          ele[k].style.background = 'cyan';
+  }
+
+  return i;
 }
 
-async function partition(allBars, lo, hi)
-{
-    // console.log("partition");
-
-    const pivot = parseInt(allBars[lo].style.height);
-
-    console.log("pivot : "+ pivot);
-
-    let i = lo+1;
-    let j = hi;
-  
-    while(i<j)
-    {
-  
-      while(i<=hi && parseInt(allBars[i].style.height) < pivot)
-      {
-        i++;
+async function quickSort(ele, l, r){
+  console.log('In quickSort()', `l=${l} r=${r}`, typeof(l), typeof(r));
+  if(l < r){
+      let pivot_index = await partitionLomuto(ele, l, r);
+      await quickSort(ele, l, pivot_index - 1);
+      await quickSort(ele, pivot_index + 1, r);
+  }
+  else{
+      if(l >= 0 && r >= 0 && l <ele.length && r <ele.length){
+          ele[r].style.background = 'green';
+          ele[l].style.background = 'green';
       }
-  
-      while(j>lo && parseInt(allBars[j].style.height) > pivot)
-      {
-        j--;
-      }
-  
-      // console.log(i + " " + j);
-  
-      // console.log(arr[i] + " " + arr[j]);
-      
-      if(i<j)
-      {
-        console.log("true");
-        const temp = allBars[j].style.height;
-        console.log(temp);
-        allBars[j].style.height = allBars[i].style.height;
-        allBars[i].style.height = temp;
-      }
-  
-      // console.log(arr[i] + " " + arr[j]);
-  
-    }
-  
-    allBars[lo].style.height = allBars[j].style.height;
-    allBars[j].style.height = pivot + "px";
-
-    allBars.map((ele) => console.log(ele.style.height));
-    
-    console.log("j : " + j);
-    return j;
+  }
 }
 
-const quick = document.getElementById("quick");
 
-quick.addEventListener("click", ()=>{
+const quickSortbtn = document.getElementById("quick");
+quickSortbtn.addEventListener('click', async function(){
+  let ele = document.querySelectorAll('.bar');
+  let l = 0;
+  let r = ele.length - 1;
 
-    const allBars = Array.from(document.querySelectorAll(".bar"));
-    console.log(allBars);
+  disableSortBtns();
+  disableSizeSlider();
+  disableNewArray();
 
-    let str = "";
+  await  quickSort(ele, l, r);
 
-    allBars.map((bar)=>{
-        str = str + parseInt(bar.style.height) + ", "
-    });
-
-    console.log(str);
-
-    // quickSort(allBars, 0, allBars.length-1);
-})
+  enableSortBtns();
+  enableSizeSlider();   
+  enableNewArray();
+});

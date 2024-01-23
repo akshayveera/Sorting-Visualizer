@@ -84,6 +84,8 @@ function disableSortBtns()
     document.getElementById("bubble").disabled = true;
     document.getElementById("selection").disabled = true;
     document.getElementById("insertion").disabled = true;
+    document.getElementById("quick").disabled = true;
+    document.getElementById("merge").disabled = true;
 }
 
 // enable sorting buttons
@@ -93,6 +95,8 @@ function enableSortBtns()
     document.getElementById("bubble").disabled = false;
     document.getElementById("selection").disabled = false;
     document.getElementById("insertion").disabled = false;
+    document.getElementById("quick").disabled = false;
+    document.getElementById("merge").disabled = false;
 }
 
 // disable size slider
